@@ -1,10 +1,11 @@
 
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { Home, MessageSquare, Image } from "lucide-react";
 
 interface NavItem {
   name: string;
-  icon: string;
+  icon: React.ElementType;
   path: string;
 }
 
@@ -16,16 +17,15 @@ const NavigationMenu = () => {
   };
 
   const navItems: NavItem[] = [
-    { name: "Dashboard", icon: "Home", path: "/dashboard" },
-    { name: "Generator", icon: "MessageSquare", path: "/generator" },
-    { name: "Results", icon: "Image", path: "/results" }
+    { name: "Dashboard", icon: Home, path: "/dashboard" },
+    { name: "Generator", icon: MessageSquare, path: "/generator" },
+    { name: "Results", icon: Image, path: "/results" }
   ];
 
   return (
     <nav className="hidden md:flex items-center gap-6">
       {navItems.map((item) => {
-        // Dynamically import the icon
-        const Icon = require("lucide-react")[item.icon];
+        const Icon = item.icon;
         
         return (
           <Link
