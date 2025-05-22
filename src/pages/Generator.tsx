@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "@/context/UserContext";
@@ -42,11 +41,13 @@ const Generator = () => {
     postPurpose: PostPurpose;
     customType: string;
     customPurpose: string;
+    additionalDetails: string;
   }>({
     postType: preselectedType || "promotional",
     postPurpose: "attention",
     customType: "",
     customPurpose: "",
+    additionalDetails: "",
   });
 
   const [captionResult, setCaptionResult] = useState<CaptionResponse | null>(null);
@@ -98,6 +99,7 @@ const Generator = () => {
         postPurpose: formData.postPurpose,
         customType: formData.customType,
         customPurpose: formData.customPurpose,
+        additionalDetails: formData.additionalDetails,
         businessType: user.businessType,
         businessDescription: user.businessDescription,
       };
@@ -245,13 +247,16 @@ const Generator = () => {
                 )}
 
                 <div className="space-y-2">
-                  <Label htmlFor="businessDescription">
+                  <Label htmlFor="additionalDetails">
                     Additional details (optional)
                   </Label>
                   <Textarea
-                    id="businessDescription"
+                    id="additionalDetails"
+                    name="additionalDetails"
                     placeholder="Add any specific details you want included in the caption..."
                     rows={3}
+                    value={formData.additionalDetails}
+                    onChange={handleInputChange}
                   />
                 </div>
 

@@ -13,11 +13,15 @@ export const generateCaption = async (request: CaptionRequest): Promise<CaptionR
       ? request.customPurpose
       : request.postPurpose;
 
+    // Enhanced prompt to include all business details
     const prompt = `Generate a social media caption for a ${request.businessType} business that is vulnerable, conversational, and emotionally engaging.
     
     The caption should be ${postType} in nature and designed for ${postPurpose}.
     
-    Business details: ${request.businessDescription}
+    Business details: 
+    - Business type: ${request.businessType}
+    - Business description: ${request.businessDescription}
+    ${request.additionalDetails ? `- Additional context: ${request.additionalDetails}` : ''}
     
     Style guidelines:
     - Write in a simple, direct style similar to Alex Hormozi

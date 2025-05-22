@@ -1,12 +1,12 @@
-
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Copy, Check, Share } from "lucide-react";
+import { ArrowLeft, Copy, Check } from "lucide-react";
 import { CaptionResponse } from "@/types";
+import SocialShareButtons from "@/components/SocialShareButtons";
 
 const Results = () => {
   const location = useLocation();
@@ -181,14 +181,8 @@ const Results = () => {
                 {copied ? <Check className="mr-2 h-4 w-4" /> : <Copy className="mr-2 h-4 w-4" />}
                 {copied ? "Copied" : "Copy Caption"}
               </Button>
-              <Button 
-                variant="default"
-                className="flex-1 sm:flex-initial" 
-                onClick={handleShare}
-              >
-                <Share className="mr-2 h-4 w-4" />
-                Share
-              </Button>
+              
+              <SocialShareButtons caption={caption} />
             </div>
           </CardFooter>
         </Card>
