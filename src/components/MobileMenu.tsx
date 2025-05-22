@@ -2,7 +2,9 @@
 import { useUser } from "@/context/UserContext";
 import { Home, MessageSquare, Image } from "lucide-react";
 import { useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import AppLogo from "./AppLogo";
 
 interface MobileMenuProps {
   onClose: () => void;
@@ -27,27 +29,7 @@ const MobileMenu = ({ onClose, onLogout }: MobileMenuProps) => {
     <div className="fixed inset-0 z-40 bg-background/95 backdrop-blur md:hidden animate-fade-in">
       <div className="container h-full py-6 flex flex-col">
         <div className="flex items-center justify-between mb-8">
-          <a href="/dashboard" className="flex items-center gap-2 font-semibold">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#9333ea"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M19 5v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2Z" />
-              <path d="M12 13V7" />
-              <path d="M9 10h6" />
-              <path d="M9 17h6" />
-            </svg>
-            <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Scale<sup>+</sup> Caption
-            </span>
-          </a>
+          <AppLogo />
           <Button variant="ghost" size="icon" onClick={onClose}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -68,9 +50,9 @@ const MobileMenu = ({ onClose, onLogout }: MobileMenuProps) => {
         </div>
         <nav className="flex flex-col gap-4">
           {navItems.map((item) => (
-            <a
+            <Link
               key={item.name}
-              href={item.path}
+              to={item.path}
               className={`text-lg font-medium transition-colors flex items-center gap-3 p-3 rounded-md ${
                 isActive(item.path)
                   ? "bg-primary/10 text-primary"
@@ -80,7 +62,7 @@ const MobileMenu = ({ onClose, onLogout }: MobileMenuProps) => {
             >
               <item.icon className="h-5 w-5" />
               {item.name}
-            </a>
+            </Link>
           ))}
         </nav>
         <div className="mt-auto pt-4 border-t">
