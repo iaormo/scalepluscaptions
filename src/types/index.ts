@@ -18,7 +18,6 @@ export interface CaptionRequest {
   customPurpose?: string;
   businessType: string;
   businessDescription: string;
-  additionalDetails?: string;
 }
 
 export interface CaptionResponse {
