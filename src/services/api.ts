@@ -13,12 +13,22 @@ export const generateCaption = async (request: CaptionRequest): Promise<CaptionR
       ? request.customPurpose
       : request.postPurpose;
 
-    const prompt = `Generate an emotionally engaging, vulnerable, and expertly crafted social media caption for a ${request.businessType} business. 
-    The caption should be ${postType} in nature and designed for ${postPurpose}.
-    Business description: ${request.businessDescription}
+    const prompt = `Generate a social media caption for a ${request.businessType} business that is vulnerable, conversational, and emotionally engaging.
     
-    Make the caption captivating from the first word to a compelling call-to-action, and finish with 5-7 curated trending hashtags.
-    Ensure the caption is personalized to this specific business type and description.`;
+    The caption should be ${postType} in nature and designed for ${postPurpose}.
+    
+    Business details: ${request.businessDescription}
+    
+    Style guidelines:
+    - Write in a simple, direct style similar to Alex Hormozi
+    - Keep it conversational but not too informal or street
+    - Make it vulnerable and authentic
+    - Use minimal emojis (max 1-2 if needed)
+    - Format with one point per line for easy readability
+    - Always include a clear call-to-action at the end
+    - Include 5-7 relevant trending hashtags
+    
+    Use the actual business information provided - no placeholders.`;
 
     const response = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
@@ -31,7 +41,7 @@ export const generateCaption = async (request: CaptionRequest): Promise<CaptionR
         messages: [
           {
             role: "system",
-            content: "You are an expert social media caption writer who specializes in creating engaging, emotionally resonant content that drives engagement."
+            content: "You are an expert social media caption writer who specializes in creating engaging, emotionally resonant content that drives engagement. Write in a simple, direct style similar to Alex Hormozi - vulnerable, authentic, but professional."
           },
           {
             role: "user",

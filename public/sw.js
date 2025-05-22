@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'captioncraft-v1';
+const CACHE_NAME = 'scale-plus-caption-v1';
 
 // Add list of files to cache
 const urlsToCache = [

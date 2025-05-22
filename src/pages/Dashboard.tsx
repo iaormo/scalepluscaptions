@@ -58,6 +58,35 @@ const captionTypes = [
   },
 ];
 
+// New messaging-style caption tips
+const captionTips = [
+  {
+    text: "Start with a hook that grabs attention in the first 5 words",
+    fromMe: false,
+    time: "9:41 AM"
+  },
+  {
+    text: "Share a vulnerable truth about your journey. People connect with authenticity.",
+    fromMe: false,
+    time: "9:42 AM"
+  },
+  {
+    text: "Tell one story at a time. Focus beats information overload.",
+    fromMe: false,
+    time: "9:44 AM"
+  },
+  {
+    text: "End with ONE clear call-to-action. What should they do next?",
+    fromMe: false,
+    time: "9:45 AM"
+  },
+  {
+    text: "Use questions to create engagement. People love to share their opinions.",
+    fromMe: false,
+    time: "9:47 AM"
+  }
+];
+
 const Dashboard = () => {
   const { user } = useUser();
   const navigate = useNavigate();
@@ -152,43 +181,32 @@ const Dashboard = () => {
 
             <Card className={`transition-all duration-700 transform ${isLoaded ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`} style={{ transitionDelay: '500ms' }}>
               <CardHeader>
-                <CardTitle>Tips for Engaging Captions</CardTitle>
+                <CardTitle>Caption Secrets</CardTitle>
                 <CardDescription>
-                  Maximize your social media engagement with these proven strategies
+                  Direct from social media experts to boost your engagement
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <div className="bg-primary/10 p-2 rounded-full">
-                    <MessageSquare className="h-4 w-4 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium">Start with a hook</p>
-                    <p className="text-sm text-muted-foreground">Capture attention in the first line</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="bg-primary/10 p-2 rounded-full">
-                    <MessageSquare className="h-4 w-4 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium">Ask questions</p>
-                    <p className="text-sm text-muted-foreground">Encourage comments and interaction</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="bg-primary/10 p-2 rounded-full">
-                    <MessageSquare className="h-4 w-4 text-primary" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-medium">Include a call-to-action</p>
-                    <p className="text-sm text-muted-foreground">Tell your audience what to do next</p>
+              <CardContent>
+                <div className="bg-gray-50 p-3 rounded-lg max-h-[220px] overflow-y-auto">
+                  <div className="space-y-3">
+                    {captionTips.map((tip, index) => (
+                      <div key={index} className={`flex ${tip.fromMe ? 'justify-end' : 'justify-start'}`}>
+                        <div className={`rounded-2xl px-4 py-2 max-w-[85%] text-sm ${tip.fromMe ? 'bg-primary text-white' : 'bg-gray-200'}`}>
+                          <p>{tip.text}</p>
+                          <p className="text-xs opacity-70 mt-1 text-right">{tip.time}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </CardContent>
-              <CardFooter>
-                <Button variant="outline" size="sm">
-                  View More Tips
+              <CardFooter className="flex justify-center">
+                <Button 
+                  variant="ghost" 
+                  onClick={() => navigate("/generator")} 
+                  className="text-accent hover:text-accent hover:bg-accent/10"
+                >
+                  Create your first caption
                 </Button>
               </CardFooter>
             </Card>

@@ -16,4 +16,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// Set page title to match app name
+document.title = "Scale+ Caption";
+
 createRoot(document.getElementById("root")!).render(<App />);

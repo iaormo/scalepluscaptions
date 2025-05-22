@@ -1,12 +1,12 @@
 
 {
-  "name": "CaptionCraft",
-  "short_name": "CaptionCraft",
+  "name": "Scale+ Caption",
+  "short_name": "Scale+ Caption",
   "description": "Generate engaging, personalized social media captions for your business",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#3b82f6",
+  "theme_color": "#9333ea",
   "icons": [
     {
       "src": "/icon-192.png",

@@ -2,7 +2,7 @@
 import { useState, useEffect, ReactNode } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useUser } from "@/context/UserContext";
-import { Menu, Home, MessageSquare, Image, Settings } from "lucide-react";
+import { Menu, Home, MessageSquare, Image } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -53,8 +53,7 @@ const Layout = ({ children }: LayoutProps) => {
   const navItems = [
     { name: "Dashboard", icon: Home, path: "/dashboard" },
     { name: "Generator", icon: MessageSquare, path: "/generator" },
-    { name: "Results", icon: Image, path: "/results" },
-    { name: "Settings", icon: Settings, path: "/settings" },
+    { name: "Results", icon: Image, path: "/results" }
   ];
 
   return (
@@ -82,7 +81,7 @@ const Layout = ({ children }: LayoutProps) => {
                 height="24"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="#3b82f6"
+                stroke="#9333ea"
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -93,7 +92,7 @@ const Layout = ({ children }: LayoutProps) => {
                 <path d="M9 17h6" />
               </svg>
               <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                CaptionCraft
+                Scale<sup>+</sup> Caption
               </span>
             </a>
           </div>
@@ -147,7 +146,7 @@ const Layout = ({ children }: LayoutProps) => {
                   height="24"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#3b82f6"
+                  stroke="#9333ea"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -158,7 +157,7 @@ const Layout = ({ children }: LayoutProps) => {
                   <path d="M9 17h6" />
                 </svg>
                 <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                  CaptionCraft
+                  Scale<sup>+</sup> Caption
                 </span>
               </a>
               <Button variant="ghost" size="icon" onClick={toggleMobileMenu}>
@@ -238,7 +237,7 @@ const Layout = ({ children }: LayoutProps) => {
             </a>
           </p>
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} CaptionCraft. All rights reserved.
+            © {new Date().getFullYear()} Scale<sup>+</sup> Caption. All rights reserved.
           </p>
         </div>
       </footer>
