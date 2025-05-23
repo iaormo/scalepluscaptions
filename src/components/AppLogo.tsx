@@ -1,5 +1,6 @@
 
 import { Link } from "react-router-dom";
+import { Superscript } from "lucide-react";
 
 const AppLogo = () => {
   return (
@@ -23,8 +24,8 @@ const AppLogo = () => {
         <path d="M9 10h6" />
         <path d="M9 17h6" />
       </svg>
-      <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-        Scale<sup>+</sup> Caption
+      <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent flex items-center">
+        Scale<sup className="text-xs">+</sup> Captions
       </span>
     </Link>
   );

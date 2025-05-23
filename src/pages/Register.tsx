@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 
 const businessTypes = [
   "E-commerce",
@@ -37,12 +37,16 @@ const businessTypes = [
 
 const Register = () => {
   const navigate = useNavigate();
-  const { login } = useUser();
+  const { register } = useUser();
   const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     email: "",
     phone: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
     businessName: "",
     businessType: "",
     customBusinessType: "",
@@ -52,6 +56,9 @@ const Register = () => {
   const [errors, setErrors] = useState({
     email: "",
     phone: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
     businessName: "",
     businessType: "",
     businessDescription: "",
@@ -82,6 +89,21 @@ const Register = () => {
       valid = false;
     }
 
+    if (!formData.username || formData.username.length < 3) {
+      newErrors.username = "Username must be at least 3 characters";
+      valid = false;
+    }
+
+    if (!formData.password || formData.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+      valid = false;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "Passwords do not match";
+      valid = false;
+    }
+
     if (!formData.businessName) {
       newErrors.businessName = "Business name is required";
       valid = false;
@@ -101,28 +123,50 @@ const Register = () => {
     return valid;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (validateForm()) {
-      const finalBusinessType = formData.businessType === "Other" && formData.customBusinessType
-        ? formData.customBusinessType
-        : formData.businessType;
+      setIsLoading(true);
+      
+      try {
+        const finalBusinessType = formData.businessType === "Other" && formData.customBusinessType
+          ? formData.customBusinessType
+          : formData.businessType;
 
-      login(
-        formData.email,
-        formData.phone,
-        formData.businessName,
-        finalBusinessType,
-        formData.businessDescription
-      );
+        const success = await register(
+          formData.email,
+          formData.phone,
+          formData.username,
+          formData.password,
+          formData.businessName,
+          finalBusinessType,
+          formData.businessDescription
+        );
 
-      toast({
-        title: "Registration successful!",
-        description: "Welcome to CaptionCraft. Let's create some great captions!",
-      });
-
-      navigate("/dashboard");
+        if (success) {
+          toast({
+            title: "Registration successful!",
+            description: "Welcome to Scale+ Captions. Let's create some great captions!",
+          });
+          navigate("/dashboard");
+        } else {
+          toast({
+            title: "Registration failed",
+            description: "Username already exists. Please choose a different one.",
+            variant: "destructive",
+          });
+        }
+      } catch (error) {
+        console.error("Registration error:", error);
+        toast({
+          title: "Registration failed",
+          description: "An error occurred during registration. Please try again.",
+          variant: "destructive",
+        });
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -142,12 +186,12 @@ const Register = () => {
         <div className="space-y-2 text-center mb-8">
           <h1 className="text-3xl font-bold">Create Your Account</h1>
           <p className="text-muted-foreground">
-            Get started with CaptionCraft to create engaging social media captions
+            Get started with Scale+ Captions to create engaging social media captions
           </p>
         </div>
 
         <div className="bg-card border rounded-lg shadow-sm p-6 animate-scale-in">
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email address</Label>
               <Input
@@ -174,6 +218,47 @@ const Register = () => {
                 className={errors.phone ? "border-destructive" : ""}
               />
               {errors.phone && <p className="text-xs text-destructive">{errors.phone}</p>}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="username">Username</Label>
+              <Input
+                id="username"
+                name="username"
+                placeholder="Choose a username"
+                value={formData.username}
+                onChange={handleChange}
+                className={errors.username ? "border-destructive" : ""}
+              />
+              {errors.username && <p className="text-xs text-destructive">{errors.username}</p>}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Enter your password"
+                value={formData.password}
+                onChange={handleChange}
+                className={errors.password ? "border-destructive" : ""}
+              />
+              {errors.password && <p className="text-xs text-destructive">{errors.password}</p>}
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Input
+                id="confirmPassword"
+                name="confirmPassword"
+                type="password"
+                placeholder="Confirm your password"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className={errors.confirmPassword ? "border-destructive" : ""}
+              />
+              {errors.confirmPassword && <p className="text-xs text-destructive">{errors.confirmPassword}</p>}
             </div>
 
             <div className="space-y-2">
@@ -236,8 +321,15 @@ const Register = () => {
               {errors.businessDescription && <p className="text-xs text-destructive">{errors.businessDescription}</p>}
             </div>
 
-            <Button type="submit" className="w-full">
-              Create Account
+            <Button type="submit" className="w-full" disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Creating Account...
+                </>
+              ) : (
+                "Create Account"
+              )}
             </Button>
           </form>
         </div>
